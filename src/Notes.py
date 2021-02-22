@@ -1,13 +1,11 @@
-from discord.ext import commands
-from discord.ext.commands import Context
-
-
 class Note:
 
     def __init__(self, name):
         self.name = name
         self.notes = {}
-        self.numNotes = 0
+
+    def __len__(self):
+        return len(self.notes)
 
     def add_note(self, title, content):
         self.notes[title] = content
