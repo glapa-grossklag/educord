@@ -1,24 +1,49 @@
 from discord.ext import commands
 from discord.ext.commands import Context
+from notebook import Notebook, Note
 
 import config
-import notebook
 import json
 import discord
 
 bot = commands.Bot(config.prefix)
 
 
+def write_json(data, filename="data.json"):
+    with open(filename, 'w') as f:
+        json.dump(data, f)
+
+
 @bot.command()
 async def createNotebook(ctx, name):
-    name = Notebook(name)
+    with open("data.json", 'r') as f:
+        data = json.load(f)
+
+    if name in data:
+        ctx.reply("{}, this notebook already exists.".format(ctx.message.author))
+    else:
+        new = Notebook(name)
+        data.append(new)
+        write_json(data)
+
+
+@bot.command()
+async def deleteNote(ctx, name, note):
+    with open("data.json", 'r') as f:
+        data = json.load(f)
+    if note in data[name]:
+        data[name].pop(note)
+        ctx.reply("Successfully deleted note")
+    else:
+        ctx.reply("{}, sorry this note does not exists".format(
+            ctx.message.author))
 
 
 @bot.command(pass_context=True, name="notebook")
 async def displayNotebook(ctx, name):
     channel = ctx.message.channel
 
-    with open("data.json") as f:
+    with open("data.json", 'r') as f:
         data = json.load(f)
 
     if name in data:
