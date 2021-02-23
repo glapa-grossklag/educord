@@ -32,34 +32,31 @@ async def deleteNote(ctx, notebook: str, note: str):
     if notebook in data:
         if note in data[notebook]:
             data[notebook].pop(note)
-            ctx.reply("Successfully deleted note")
+            ctx.reply("Deleted `{}` from `{}`".format(note, notebook))
         else:
-            ctx.reply("{}, sorry this note does not exist".format(
-                ctx.message.author))
+            ctx.reply("Invalid note: {}".format(note))
     else:
-        ctx.reply("%s, sorry this notebook does not exist" %
-                  ctx.message.author)
+        ctx.reply("Invalid notebook: {}".format(notebook))
 
 
 @bot.command(pass_context=True, name="notebook")
-async def displayNotebook(ctx, name):
+async def displayNotebook(ctx, notebook: str):
     channel = ctx.message.channel
 
     with open(config.datafile, 'r') as f:
         data = json.load(f)
 
-    if name in data:
+    if notebook in data:
         notebook = discord.Embed(
-            title=data[name]
+            title=data[notebook]
             # color=discord.Color.yellow()
         )
-        for note in data[name]:
-            notebook.add_field(name=note, value=data[name][note], inline=True)
+        for note in data[notebook]:
+            notebook.add_field(name=note, value=data[notebook][note], inline=True)
 
         await ctx.send_message(channel, embed=notebook)
-
     else:
-        await ctx.send_message(channel, "{}, this notebook does not exist".format(ctx.message.author))
+        await ctx.reply("Invalid notebook: {}".format(notebook))
 
 
 @bot.event
