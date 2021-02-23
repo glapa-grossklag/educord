@@ -47,14 +47,14 @@ async def displayNotebook(ctx, notebook: str):
         data = json.load(f)
 
     if notebook in data:
-        notebook = discord.Embed(
+        embed = discord.Embed(
             title=data[notebook]
             # color=discord.Color.yellow()
         )
         for note in data[notebook]:
-            notebook.add_field(name=note, value=data[notebook][note], inline=True)
+            embed.add_field(name=note, value=data[notebook][note], inline=True)
 
-        await ctx.send_message(channel, embed=notebook)
+        await ctx.send_message(channel, embed=embed)
     else:
         await ctx.reply("Invalid notebook: {}".format(notebook))
 
