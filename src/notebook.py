@@ -30,18 +30,17 @@ class Notebook:
         for note in self.notes:
             notebook[self.title][note.title] = note.content
 
-    """
-    Add a new note to the notebook
-    """
-
     def add(self, note: Note):
+        """
+        Add a new note to the notebook
+        """
         self.notes.append(note)
 
-    """
-    Remove a note from the notebook
-    """
 
     def remove(self, note: Note):
+        """
+        Remove a note from the notebook
+        """
         if note in self.notes:
             self.notes.remove(note)
         else:

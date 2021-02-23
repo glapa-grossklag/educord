@@ -15,12 +15,12 @@ def write_json(data, filename="data.json"):
 
 
 @bot.command()
-async def createNotebook(ctx, name):
+async def createNotebook(ctx, name: str):
     with open("data.json", 'r') as f:
         data = json.load(f)
 
     if name in data:
-        ctx.reply("{}, this notebook already exists.".format(ctx.message.author))
+        ctx.reply("A notebook with that name already exists")
     else:
         new = Notebook(name)
         data.append(new)
@@ -28,15 +28,15 @@ async def createNotebook(ctx, name):
 
 
 @bot.command()
-async def deleteNote(ctx, name, note):
+async def deleteNote(ctx, notebook: str, note: str):
     with open("data.json", 'r') as f:
         data = json.load(f)
-    if name in data:
-        if note in data[name]:
-            data[name].pop(note)
+    if notebook in data:
+        if note in data[notebook]:
+            data[notebook].pop(note)
             ctx.reply("Successfully deleted note")
         else:
-            ctx.reply("{}, sorry this note does not exists".format(
+            ctx.reply("{}, sorry this note does not exist".format(
                 ctx.message.author))
     else:
         ctx.reply("%s, sorry this notebook does not exist" %
