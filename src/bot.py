@@ -6,17 +6,15 @@ import config
 import json
 import discord
 
-bot = commands.Bot(config.prefix)
-
-
-def write_json(data, filename="data.json"):
+def write_json(data, filename=config.datafile):
     with open(filename, 'w') as f:
         json.dump(data, f)
 
+bot = commands.Bot(config.prefix)
 
 @bot.command()
 async def createNotebook(ctx, name: str):
-    with open("data.json", 'r') as f:
+    with open(config.datafile, 'r') as f:
         data = json.load(f)
 
     if name in data:
@@ -29,7 +27,7 @@ async def createNotebook(ctx, name: str):
 
 @bot.command()
 async def deleteNote(ctx, notebook: str, note: str):
-    with open("data.json", 'r') as f:
+    with open(config.datafile, 'r') as f:
         data = json.load(f)
     if notebook in data:
         if note in data[notebook]:
@@ -47,7 +45,7 @@ async def deleteNote(ctx, notebook: str, note: str):
 async def displayNotebook(ctx, name):
     channel = ctx.message.channel
 
-    with open("data.json", 'r') as f:
+    with open(config.datafile, 'r') as f:
         data = json.load(f)
 
     if name in data:
