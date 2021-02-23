@@ -31,12 +31,16 @@ async def createNotebook(ctx, name):
 async def deleteNote(ctx, name, note):
     with open("data.json", 'r') as f:
         data = json.load(f)
-    if note in data[name]:
-        data[name].pop(note)
-        ctx.reply("Successfully deleted note")
+    if name in data:
+        if note in data[name]:
+            data[name].pop(note)
+            ctx.reply("Successfully deleted note")
+        else:
+            ctx.reply("{}, sorry this note does not exists".format(
+                ctx.message.author))
     else:
-        ctx.reply("{}, sorry this note does not exists".format(
-            ctx.message.author))
+        ctx.reply("%s, sorry this notebook does not exist" %
+                  ctx.message.author)
 
 
 @bot.command(pass_context=True, name="notebook")
