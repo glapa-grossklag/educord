@@ -1,0 +1,22 @@
+{
+  "notebook1": [
+    {
+      "notes": [
+        {
+          "thing1": "field1",
+          "thing2": "field2"
+        }
+      ]
+    }
+  ],
+  "notebook2": [
+    {
+      "notes": [
+        {
+          "thing1": "field3",
+          "thing2": "field4"
+        }
+      ]
+    }
+  ]
+}
