@@ -17,8 +17,15 @@ bot = commands.Bot(config.prefix)
 
 @bot.command()
 async def createNotebook(ctx, name: str):
-    with open(config.datafile, 'r') as f:
-        data = json.load(f)
+    data = {}
+    try:
+        with open(config.datafile, 'r') as f:
+            data = json.load(f)
+    except IOError:
+        with open(config.datafile, 'w') as f:
+            # Initialize the datafile with an empty dict
+            json.dump(data, f)
+
 
     if name in data:
         ctx.reply("A notebook with that name already exists")
