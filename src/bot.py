@@ -6,11 +6,14 @@ import config
 import json
 import discord
 
+
 def write_json(data, filename=config.datafile):
     with open(filename, 'w') as f:
         json.dump(data, f)
 
+
 bot = commands.Bot(config.prefix)
+
 
 @bot.command()
 async def createNotebook(ctx, name: str):
@@ -23,6 +26,20 @@ async def createNotebook(ctx, name: str):
         new = Notebook(name)
         data.append(new)
         write_json(data)
+
+
+@bot.command()
+async def addNote(ctx, notebook: Notebook, name: str, value: str):
+    with open(config.datafile, 'r') as f:
+        data = json.load(f)
+    if notebook in data:
+        if name not in data:
+            data[notebook][name] = value
+            write_json(data)
+        else:
+            ctx.reply("This note already exists in this notebook")
+    else:
+        ctx.reply("This notebook does not exist")
 
 
 @bot.command()
