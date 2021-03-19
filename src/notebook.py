@@ -14,7 +14,7 @@ class Note:
 
 class Notebook:
     title: str
-    notes: list[Note]
+    notes: [Note]
     created_at: datetime
 
     def __init__(self, title: str):
@@ -35,7 +35,6 @@ class Notebook:
         Add a new note to the notebook
         """
         self.notes.append(note)
-
 
     def remove(self, note: Note):
         """
