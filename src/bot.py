@@ -31,7 +31,7 @@ async def createNotebook(ctx, name: str):
         ctx.reply("A notebook with that name already exists")
     else:
         new = Notebook(name)
-        data.append(new)
+        data[new] = Notebook
         write_json(data)
 
 
